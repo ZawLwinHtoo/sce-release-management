@@ -1,32 +1,73 @@
-# TASK: Automated System Building & CI Pipeline Demonstration
+# Release Management Demo
 
-## Objective
-Demonstrate Automated System Building and Continuous Integration from Lecture 5-II using GitHub Actions:
-1. Automated compilation/building[cite: 1]
-2. Automated test execution[cite: 1]
-3. Preventing defective code from entering the mainline baseline[cite: 1]
+**Software Construction & Evolution — Configuration Management**
 
-## Implementation Instructions for the Agent
-1. **Minimal Code & Test:**
-   - Initialize a minimal project (e.g., Node.js with `vitest` or Python with `pytest`).
-   - Write a core math/logic function: `calculateTotal()`.
-   - Write an automated unit test verifying its correctness[cite: 1].
+## What Is This?
 
-2. **Build Configuration:**
-   - Configure a command to run tests automatically (e.g., `npm test` or `pytest`)[cite: 1].
+A demonstration of **Release Management** using Git, GitHub, and automated tooling. When code is pushed to `main`, a GitHub Actions pipeline automatically:
 
-3. **CI Pipeline Configuration:**
-   - Create `.github/workflows/ci.yml`.
-   - Configure it to trigger on `push` and `pull_request` to `main`.
-   - Pipeline steps:
-     1. Checkout code[cite: 1]
-     2. Setup environment[cite: 1]
-     3. Install dependencies[cite: 1]
-     4. Run automated tests[cite: 1]
+1. ✅ Runs tests to verify the codebase is healthy
+2. 📋 Analyses commit messages to determine the version bump (patch / minor / major)
+3. 📝 Generates a `CHANGELOG.md`
+4. 🏷️ Creates a Git tag (e.g., `v1.0.0`)
+5. 📦 Packages source files into `release.zip`
+6. 🚀 Publishes a **GitHub Release** with the zip attached
 
-4. **Demo Scenario:**
-   - **Step A:** Push working code -> Show CI passing (Green check)[cite: 1].
-   - **Step B:** Break the test on a branch (e.g., `expect(1 + 1).toBe(3)`) -> Show CI failing (Red cross) and blocking the merge to baseline[cite: 1].
+## Project Structure
 
-## Deliverable
-A ready-to-use repository structure with `.github/workflows/ci.yml`, test files, and a short script demonstrating the Pass vs Fail pipeline run[cite: 1].
+```
+sceTest/
+├── .github/workflows/
+│   └── release.yml             ← Automated release pipeline
+├── src/
+│   └── index.js                ← Application source code
+├── tests/
+│   └── index.test.js           ← Automated tests
+├── .releaserc.json             ← semantic-release configuration
+├── package.json                ← Project config & dependencies
+├── RELEASE-MANAGEMENT.md       ← Detailed release management guide
+└── README.md                   ← This file
+```
+
+## Quick Start
+
+```bash
+# Clone & install
+git clone https://github.com/kaneLuvsCoding/sceTest.git
+cd sceTest
+npm install
+
+# Run tests
+npm test
+```
+
+## Triggering a Release
+
+Use **Conventional Commits** to control what kind of release is created:
+
+```bash
+# Patch release (v1.0.0 → v1.0.1)
+git commit -m "fix: correct a bug"
+
+# Minor release (v1.0.0 → v1.1.0)
+git commit -m "feat: add new feature"
+
+# Major release (v1.0.0 → v2.0.0)
+git commit -m "feat!: breaking API change"
+
+# Push to trigger the pipeline
+git push origin main
+```
+
+Then check the **Actions** and **Releases** tabs on GitHub.
+
+## Tools
+
+- **Git & GitHub** — Version control & release hosting
+- **GitHub Actions** — Automated pipeline
+- **semantic-release** — Automated versioning & changelog
+- **Vitest** — Test runner
+
+## Lecture Reference
+
+See [RELEASE-MANAGEMENT.md](RELEASE-MANAGEMENT.md) for a detailed mapping of this project to the lecture material on Release Management.

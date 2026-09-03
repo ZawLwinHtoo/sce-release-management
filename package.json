@@ -1,12 +1,20 @@
 {
-  "name": "sce-ci-demo",
-  "version": "1.0.0",
-  "description": "Automated System Building & CI Pipeline Demonstration",
+  "name": "sce-release-management",
+  "version": "0.0.0",
+  "description": "Release Management Demo — Software Construction & Evolution",
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "semantic-release": "semantic-release"
   },
   "devDependencies": {
-    "vitest": "^3.2.1"
+    "vitest": "^3.2.1",
+    "semantic-release": "^24.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaneLuvsCoding/sceTest.git"
   }
 }
