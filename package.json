@@ -1,0 +1,12 @@
+{
+  "name": "sce-ci-demo",
+  "version": "1.0.0",
+  "description": "Automated System Building & CI Pipeline Demonstration",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.1"
+  }
+}
