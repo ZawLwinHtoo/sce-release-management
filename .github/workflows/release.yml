@@ -1,4 +1,4 @@
-name: Release
+name: Release Pipeline
 
 on:
   push:
@@ -10,39 +10,87 @@ permissions:
   pull-requests: write
 
 jobs:
-  release:
-    name: Test & Release
+  build-and-test:
+    name: "Job 1: Build & Test (CI Baseline)"
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Checkout code (full history needed for semantic-release)
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          persist-credentials: false
 
-      # Step 2: Setup Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # Step 4: Run tests to verify baseline is healthy
-      - name: Run tests
+      - name: Run automated unit tests
         run: npm test
 
-      # Step 5: Package release artefacts
       - name: Package release artefacts
         run: zip -r release.zip src/ package.json README.md RELEASE-MANAGEMENT.md
 
-      # Step 6: Run semantic-release (tags, changelog, GitHub Release)
-      - name: Semantic Release
+      - name: Generate SHA-256 Checksum
+        run: sha256sum release.zip > checksums.txt
+
+      - name: Upload build artefacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-assets
+          path: |
+            release.zip
+            checksums.txt
+
+  staging-verification:
+    name: "Job 2: Staging Verification"
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artefacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+
+      - name: Verify SHA-256 Checksum Integrity
+        run: sha256sum -c checksums.txt
+
+      - name: Staging Sandbox Smoke Test
+        run: |
+          mkdir staging-sandbox
+          unzip release.zip -d staging-sandbox
+          cd staging-sandbox
+          node src/index.js
+          echo "Staging smoke test passed successfully!"
+
+  production-release:
+    name: "Job 3: Production Release (Controlled System)"
+    needs: staging-verification
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code (full history for semantic-release)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download verified release assets
+        uses: actions/download-artifact@v4
+        with:
+          name: release-assets
+
+      - name: Execute Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
