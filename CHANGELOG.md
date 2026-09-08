@@ -1,3 +1,5 @@
+# [2.0.0](https://github.com/ZawLwinHtoo/sce-release-management/compare/v1.1.0...v2.0.0) (2026-09-08)
+
 # [1.1.0](https://github.com/ZawLwinHtoo/sce-release-management/compare/v1.0.0...v1.1.0) (2026-09-08)
 
 
