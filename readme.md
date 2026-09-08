@@ -33,8 +33,8 @@ sceTest/
 
 ```bash
 # Clone & install
-git clone https://github.com/kaneLuvsCoding/sceTest.git
-cd sceTest
+git clone https://github.com/ZawLwinHtoo/sce-release-management.git
+cd sce-release-management
 npm install
 
 # Run tests

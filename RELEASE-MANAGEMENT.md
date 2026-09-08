@@ -59,8 +59,8 @@ This maps to the lecture's list of release package contents:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/kaneLuvsCoding/sceTest.git
-cd sceTest
+git clone https://github.com/ZawLwinHtoo/sce-release-management.git
+cd sce-release-management
 npm install
 ```
 
