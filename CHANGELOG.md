@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/ZawLwinHtoo/sce-release-management/compare/v2.0.0...v2.1.0) (2026-09-09)
+
+
+### Features
+
+* new update ([8d73cf1](https://github.com/ZawLwinHtoo/sce-release-management/commit/8d73cf19ab7f8e20507709eecb30463ce86fb6b0))
+
 # [2.0.0](https://github.com/ZawLwinHtoo/sce-release-management/compare/v1.1.0...v2.0.0) (2026-09-08)
 
 # [1.1.0](https://github.com/ZawLwinHtoo/sce-release-management/compare/v1.0.0...v1.1.0) (2026-09-08)
