@@ -3,6 +3,8 @@ name: Release Pipeline
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
@@ -67,6 +69,7 @@ jobs:
   production-release:
     name: "Job 3: Production Release (Controlled System)"
     needs: staging-verification
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
     steps:
